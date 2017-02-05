@@ -1,0 +1,45 @@
+<%inherit file="/base.html"/>
+
+<%namespace name="datepicker" file="/common/datepicker.html"/>
+
+<%!
+from libs.utils import days_ago, get_date_range
+import time
+%>
+
+<%def name="extra_head()">
+</%def>
+
+<%def name="content()">
+
+<%
+date = req.args.get('date')
+ifcode = req.args.get('ifcode')
+display_num = req.args.get('display_num')
+%>
+
+
+<%def name="extra_filters()">
+    <div class="filter ifcode btn-group">
+        ifcode :
+        <input class="form-control typeahead"  placeholder="ifcode" id="filter-ifcode" value="${ifcode}"></input>
+        display_num:
+        <input class="form-control typeahead"  placeholder="display_num" id="filter-display_num" value="${display_num}"></input>
+    </div>
+</%def>
+
+<div class="col-md-2">
+    <%include file="/backtest/sidenav.html"/>
+</div>
+
+<div class="col-md-10">
+    <div class="main">
+        ${datepicker.ifcodepicker(req.args, extra_filters=extra_filters)}
+        <h4>ema</h4>
+    </div>
+</div>
+</%def>
+<%def name="bottom_script()">
+<script src="/static/js/highstock.src.js"></script>
+<script src="/static/js/exporting.src.js"></script>
+</%def>

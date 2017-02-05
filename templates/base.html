@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    ${self.base_head()}
+    ${self.base_body()}
+</html>
+
+<%def name="base_head()">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <link href="/static/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/static/img/favicon.ico" rel="icon" type="image/x-icon"/>
+    <title>Golden Eye</title>
+    ${self.base_css()}
+    ${self.extra_head()}
+</head>
+</%def>
+
+<%def name="base_css()">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-datepicker.css" type="text/css">
+<link rel="stylesheet" href="/static/css/slider.css" type="text/css">
+<link rel="stylesheet" href="/static/css/common.css" type="text/css">
+</%def>
+
+<%def name="extra_head()"></%def>
+<%def name="base_body()">
+<body>
+    ${self.header()}
+
+    <div class="container" id="content">
+        ${self.content()}
+    </div>
+        ${self.footer()}
+        ${self.base_script()}
+        ${self.bottom_script()}
+</body>
+</%def>
+
+<%
+from flask import request as req
+hom_user = req.userid if hasattr(req, 'userid') else None
+%>
+
+<%def name="header()">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/"><img alt="Brand" src="/static/img/golden_eye.png"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/dashboard/boll">Real Time</a></li>
+                <li><a href="/backtest/ema">Back Test</a></li>
+                <li><a href="/record/virtual">Transaction</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/index/logout">登出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</%def>
+
+<%def name="content()"></%def>
+<%def name="footer()"></%def>
+
+<%def name="base_script()">
+<script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/moment.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.js"></script>
+<script src="/static/js/moment.min.js"></script>
+<script src="/static/js/mod/common.js"></script>
+<script src="/static/js/mod/nav.js"></script>
+<script src="/static/js/mod/parampicker.js"></script>
+<script src="/static/js/jquery.md5.js"></script>
+</%def>
+<%def name="bottom_script()"></%def>

@@ -1,0 +1,99 @@
+<%inherit file="/base.html"/>
+
+<%namespace name="datepicker" file="/common/datepicker.html"/>
+
+<%!
+from libs.utils import days_ago, get_date_range, ifcode_day_map
+import time
+%>
+
+<%def name="extra_head()">
+</%def>
+
+<%def name="content()">
+
+<%
+ifcode = req.args.get('ifcode')
+period_short = req.args.get('period_short')
+period_long = req.args.get('period_long')
+display_num = req.args.get('display_num')
+trans_amount = req.args.get('trans_amount')
+%>
+
+
+<%def name="extra_filters()">
+    <div class="filter ifcode btn-group">
+        ifcode :
+        <input class="form-control typeahead"  placeholder="ifcode" id="filter-ifcode" value="${ifcode}"></input>
+        period_short:
+        <input class="form-control typeahead"  placeholder="period_short" id="filter-period_short" value="${period_short}"></input>
+        period_long:
+        <input class="form-control typeahead"  placeholder="period_long" id="filter-period_long" value="${period_long}"></input>
+        trans_amount:
+        <input class="form-control typeahead"  placeholder="trans_amount" id="filter-trans_amount" value="${trans_amount}"></input>
+        display_num:
+        <input class="form-control typeahead"  placeholder="display_num" id="filter-display_num" value="${display_num}"></input>
+    </div>
+</%def>
+
+<div class="col-md-2">
+    <%include file="/backtest/sidenav.html"/>
+</div>
+
+<div class="col-md-10">
+    <div class="main">
+        ${datepicker.ifcodepicker(req.args, extra_filters=extra_filters)}
+        <h4>macd 概况</h4>
+        <div class="panel-body">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>盈利</th>
+                        <th>实际盈利</th>
+                        <th>盈利率</th>
+                        <th>总交易次数</th>
+                        <th>手续费</th>
+                        <th>每次交易手数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                       <td>${total}</td>
+                       <td>${real_profit}</td>
+                       <td>${profit_rate}</td>
+                       <td>${trans_total_num}</td>
+                       <td>${fees}</td>
+                       <td>${trans_amount}</td>
+                   </tr>
+               </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>收益额</th>
+                        <th>交易次数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    % for info in detail:
+                   <tr>
+                       <td>${info.get('date')}</td>
+                       <td>${info.get('profit')}</td>
+                       <td>${info.get('trans_num')}</td>
+                   </tr>
+                   % endfor
+               </tbody>
+            </table>
+        </div>
+        <div id="container" class="panel"></div>
+    </div>
+</div>
+</%def>
+<%def name="bottom_script()">
+<script src="/static/js/highstock.src.js"></script>
+<script src="/static/js/exporting.src.js"></script>
+<script src="/static/js/charts/chart_macd_report.js"></script>
+</%def>

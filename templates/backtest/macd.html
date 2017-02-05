@@ -1,0 +1,97 @@
+<%inherit file="/base.html"/>
+
+<%namespace name="datepicker" file="/common/datepicker.html"/>
+
+<%!
+from libs.utils import days_ago, get_date_range
+import time
+%>
+
+<%def name="content()">
+
+<%
+date = req.args.get('date')
+ifcode = req.args.get('ifcode')
+period_short = req.args.get('period_short')
+period_long = req.args.get('period_long')
+%>
+
+
+<%def name="extra_filters()">
+    <div class="filter ifcode btn-group">
+        ifcode :
+        <input class="form-control typeahead"  placeholder="ifcode" id="filter-ifcode" value="${ifcode}"></input>
+        period_short:
+        <input class="form-control typeahead"  placeholder="period_short" id="filter-period_short" value="${period_short}"></input>
+        period_long:
+        <input class="form-control typeahead"  placeholder="period_long" id="filter-period_long" value="${period_long}"></input>
+    </div>
+</%def>
+
+<div class="col-md-2">
+    <%include file="/backtest/sidenav.html"/>
+</div>
+
+<div class="col-md-10">
+    <div class="main">
+        ${datepicker.datepicker(req.args, extra_filters=extra_filters)}
+        <h4>macd</h4>
+        <!--<div id="container" style="height: 550px; min-width: 300px"></div>
+        </div>-->
+        <h4>总盈利: ${profit_all}</h4>
+        <div class="panel-body">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>事件</th>
+                        <th>交易价格</th>
+                        <th>盈利</th>
+                        <th>信息</th>
+                        <th>交易时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    % for info in profit_infos:
+                    <%
+                    if info.get('index', -1) !=-1 :
+                        transtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(info['index']/1000.0))
+                    else:
+                        transtime = ''
+                   %>
+                   <tr>
+                % if info.get('event') == '平仓盈利':
+                <td><span class="label label-danger">${info.get('event')}</span></td>
+                % endif
+                % if info.get('event') == '平仓亏损':
+                <td><span class="label label-success">${info.get('event')}</span></td>
+                % endif
+                % if info.get('event') == '卖出信号':
+                <td><span class="label label-default">${info.get('event')}</span></td>
+                % endif
+                % if info.get('event') == '买入信号':
+                <td><span class="label label-default">${info.get('event')}</span></td>
+                % endif
+                % if info.get('event') == '收盘平仓':
+                <td><span class="label label-info">${info.get('event')}</span></td>
+                % endif
+                % if info.get('event') in ['止盈信号', '止损信号']:
+                <td><span class="label label-warning">${info.get('event')}</span></td>
+                % endif
+                <td>${info.get('price')}</td>
+                <td>${info.get('gain')}</td>
+                <td>${info.get('info')}</td>
+                <td>${transtime}</td>
+            </tr>
+            % endfor
+        </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+</%def>
+<%def name="bottom_script()">
+<script src="/static/js/highstock.src.js"></script>
+<script src="/static/js/exporting.src.js"></script>
+<script src="/static/js/charts/chart_ema.js"></script>
+</%def>

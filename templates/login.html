@@ -1,0 +1,59 @@
+<%inherit file="/base.html"/>
+
+<%!
+from libs.utils import display_date, days_ago
+%>
+
+<%def name="extra_head()">
+</%def>
+
+<%def name="content()">
+
+<div class="col-md-10">
+  <div class="main" style="width: 240px;margin-left: 27%;margin-top: 20%;">
+    <div class="control-group" style="margin-top: 20px;">
+        <div class="col-xs-12">
+            <center><p class="error" id="error" style="color:red"></p></center>
+            <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="text" id="username" name="username" class="form-control" placeholder="用户名">
+            </div>
+        </div>
+    </div>
+    </br>
+    <div class="control-group" style="margin-top: 20px;">
+        <div class="col-xs-12  ">
+            <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                <input type="password" id="password" name="password" class="form-control" placeholder="密码">
+            </div>
+        </div>
+    </div></br></br></br>
+    <div class="control-group">
+        <div class="col-xs-4 col-xs-offset-4 " style="margin-left: 28%;">
+            <button id="submit_btn" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+</%def>
+
+<%def name="bottom_script()">
+<script>
+(function () {
+    $("#submit_btn").on('click', function() {
+        var username = $("#username").val(),
+            password = $.md5($("#password").val() + "${salt}");
+
+        $.post('/index/login', {'username': username, 'password': password}, function(r){
+            if (r.redirect){
+                location.href = r.redirect;
+            } else {
+                $("#error").html(r.error);
+            }
+        });
+    });
+})();
+</script>
+</%def>

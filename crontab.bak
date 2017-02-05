@@ -1,0 +1,9 @@
+25 9 * * * python /root/yh_api/data_2_mongodb.py IF1612 040112 &
+
+32 9 * * * python /root/hand_of_midas/scripts/trans_session_generator.py if1612 &
+
+2 15 * * * python /root/yh_api/cleandata_2_mysql.py IF1612 040112 &
+
+5 16 * * * python /root/cron_script/jiaogeri_tip.py
+
+7 15 * * * python /root/hand_of_midas/scripts/save_ema_backtest.py if1612 480 1400

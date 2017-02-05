@@ -1,0 +1,59 @@
+<%!
+from libs.utils import display_date, days_ago
+%>
+
+<%def name="datepicker(args, extra_filters=None)">
+
+<%
+date = args.get('date')
+if not date:
+    date = args.get('end_date', days_ago(2))
+%>
+
+<div class="filters">
+    <div class="filter date">
+        <label for="date">日期：</label>
+            <input class="form-control datepicker" id="date" type="text" value="${date | display_date}">
+    </div>
+% if extra_filters:
+    ${extra_filters()}
+% endif
+    <button class="btn btn-success refresh">刷新</button>
+</div>
+</%def>
+
+
+<%def name="date_range_picker(args, time_unit_filter=True, is_retention=False, retention_data=None, extra_filters=None)">
+
+
+<%
+begin_date = args.get('begin_date')
+end_date = args.get('end_date')
+ifcode = args.get('ifcode', '')
+%>
+
+<div class="filters">
+    <div class="filter date_range">
+        <label for="end_date">日期范围：</label>
+        <input class="form-control datepicker" id="begin_date" type="text" value="${begin_date | display_date}"> -
+        <input class="form-control datepicker" id="end_date" type="text" value="${end_date | display_date}">
+    </div>
+
+% if extra_filters:
+    ${extra_filters()}
+% endif
+    <button class="btn btn-success refresh">刷新</button>
+</div>
+</%def>
+
+
+
+<%def name="ifcodepicker(args, extra_filters=None)">
+
+<div class="filters">
+% if extra_filters:
+    ${extra_filters()}
+% endif
+<br><br><button class="btn btn-success refresh">刷新</button>
+</div>
+</%def>

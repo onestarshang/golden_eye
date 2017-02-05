@@ -1,0 +1,52 @@
+<%inherit file="/base.html"/>
+
+<%namespace name="datepicker" file="/common/datepicker.html"/>
+
+<%!
+from libs.utils import days_ago, get_date_range
+import time
+%>
+
+<%def name="content()">
+
+<%
+date = req.args.get('date')
+ifcode = req.args.get('ifcode')
+period_short = req.args.get('period_short')
+period_long = req.args.get('period_long')
+%>
+
+<%def name="extra_filters()">
+    <div class="filter ifcode btn-group">
+        ifcode :
+        <input class="form-control typeahead"  placeholder="ifcode" id="filter-ifcode" value="${ifcode}"></input>
+        period_short:
+        <input class="form-control typeahead"  placeholder="period_short" id="filter-period_short" value="${period_short}"></input>
+        period_long:
+        <input class="form-control typeahead"  placeholder="period_long" id="filter-period_long" value="${period_long}"></input>
+    </div>
+</%def>
+
+<div class="col-md-2">
+    <%include file="/realtime/sidenav.html"/>
+</div>
+
+<div class="col-md-10">
+    <div class="main">
+        ${datepicker.datepicker(req.args, extra_filters=extra_filters)}
+        <h4>boll</h4>
+        <div id="container" style="height: 550px; min-width: 300px"></div>
+        </div>
+    </div>
+</div>
+</%def>
+<%def name="bottom_script()">
+<script src="/static/js/highstock.src.js"></script>
+<script src="/static/js/exporting.src.js"></script>
+<script src="/static/js/charts/chart_boll.js"></script>
+<script>
+setInterval(function() {
+            window.location.reload();
+            }, 60000);
+</script>
+</%def>

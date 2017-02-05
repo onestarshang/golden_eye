@@ -1,0 +1,11 @@
+# -*- coding: utf8 -*-
+
+from instapush.instapush import Instapush, App
+
+def push_sig(infos):
+    app = App(appid='5670cda0a4c48ade69ea4fe6', secret='1e1a2c53e71231a5fafead9792fef4fd')
+    app.notify(event_name='midas', trackers={'signal': infos})
+
+
+if __name__ == '__main__':
+    push_sig('hahahahahahahahaha')

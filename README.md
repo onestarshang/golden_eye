@@ -1,2 +1,13 @@
-# golden_eye
-a quantify transaction system
+##更加完善的 hand of midas 单页展示应用
+
+- ema 曲线图
+- macd 曲线图
+- 累计收入曲线
+- 单日净收入
+- 买卖平仓信息展示
+- 前端使用 highcharts 表格
+- 数据文件
+- mysql 数据表
+- 每日数据存储
+- 简单地数据接口
+- 单独的指标计算集合
