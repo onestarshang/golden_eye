@@ -1,4 +1,8 @@
-##更加完善的 hand of midas 单页展示应用
+### 一个简单的量化交易系统Golden Eye
+
+所有接口使用的是银河的http 接口（yhapi），需要去请求获取数据等
+
+
 
 - ema 曲线图
 - macd 曲线图
